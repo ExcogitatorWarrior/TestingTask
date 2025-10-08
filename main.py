@@ -2,7 +2,7 @@ import argparse
 import csv
 import sys
 from tabulate import tabulate
-from reports import average_rating, average_price
+import reports
 
 
 def parse_args():
@@ -27,14 +27,12 @@ def read_csv_files(file_paths):
 def main():
     args = parse_args()
     data = read_csv_files(args.files)
-
+    report_module = reports.get_report_module(args.report)
+    report_data = report_module.generate(data)
     if args.report == "average-rating":
-        report_data = average_rating.generate(data)
         headers = [" ", "Brand", "Average Rating"]
-    # Potential upgrade
-    #elif args.report == "average-price":
-    #    report_data = average_price.generate(data)
-    #    headers = [" ", "Brand", "Average Price"]
+    elif args.report == "average-price":
+        headers = [" ", "Brand", "Average Price"]
     else:
         raise ValueError(f"Unknown report type: {args.report}")
 

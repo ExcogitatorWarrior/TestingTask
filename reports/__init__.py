@@ -2,6 +2,7 @@ from . import average_rating, average_price
 
 AVAILABLE_REPORTS = {
     "average-rating": average_rating,
+    "average-price": average_price,
 }
 
 def get_report_module(report_name):
